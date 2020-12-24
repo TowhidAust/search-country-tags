@@ -1,6 +1,7 @@
 import { Body, Card, CardItem, Container, Content, Input, Item, Label } from 'native-base';
 import React, { Component } from 'react'
 import { Text, View } from 'react-native';
+import { auth, database } from './src/firebase';
 
 export default class App extends React.Component {
 
@@ -265,10 +266,18 @@ export default class App extends React.Component {
   }
 
   componentDidMount() {
-    
+    database.ref('/AspyrerCompanyTest/').once("value").then(snapshot => {
+      console.log(snapshot.val());
+      this.setState({
+        contryArr: snapshot.val()
+      })
+    }).catch(err => {
+      console.log(err);
+    })
   }
 
   findCountries = () => {
+    
     const arr = this.state.contryArr;
     const countryArr = arr.map(name => name.toLowerCase());
     // const givenString = "India I visited canada, Austrailia and Bangladesh is a nice place";
@@ -336,13 +345,7 @@ export default class App extends React.Component {
             </CardItem>
           
             <View style={{display:"flex", flexDirection: "row", justifyContent:"center", alignItems:"center", flexWrap: 'wrap'}}>
-              {/* <Text style={{backgroundColor: "#ddd", padding: 5, margin: 5, borderRadius: 2,}}>Canada</Text>
-              <Text style={{backgroundColor: "#ddd", padding: 5, margin: 5, borderRadius: 2,}}>Australia</Text>
-              <Text style={{backgroundColor: "#ddd", padding: 5, margin: 5, borderRadius: 2,}}>Australia</Text>
-              <Text style={{backgroundColor: "#ddd", padding: 5, margin: 5, borderRadius: 2,}}>Australia</Text>
-              <Text style={{backgroundColor: "#ddd", padding: 5, margin: 5, borderRadius: 2,}}>Australia</Text>
-              <Text style={{backgroundColor: "#ddd", padding: 5, margin: 5, borderRadius: 2,}}>Australia</Text> */}
-            
+              
             {this.renderCountryTags()}
               
             </View>
