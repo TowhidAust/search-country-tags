@@ -266,6 +266,7 @@ export default class App extends React.Component {
   }
 
   componentDidMount() {
+    // fetch data from firebase
     database.ref('/AspyrerCompanyTest/').once("value").then(snapshot => {
       console.log(snapshot.val());
       this.setState({
@@ -334,7 +335,7 @@ export default class App extends React.Component {
   render() {
     return (
       <View style = {{padding: 15}}>
-          <Card>
+          <Card style={{minHeight:200, padding: 5,}}>
             <CardItem>
               <Body>
                 <Item floatingLabel>
